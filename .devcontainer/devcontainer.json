@@ -25,7 +25,8 @@
 			"extensions": [
 				"tal7aouy.icons",
 				"ms-azuretools.vscode-docker",
-				"codebiscuits.js-ts-biscuits"
+				"codebiscuits.js-ts-biscuits",
+				"esbenp.prettier-vscode",
 			]
 		}
 	}
