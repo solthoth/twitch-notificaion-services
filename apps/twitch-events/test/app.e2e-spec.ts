@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { TwitchListenerServiceModule } from './../src/twitch-listener-service.module';
+import { TwitchEventsModule } from './../src/twitch-events.module';
 
-describe('TwitchListenerServiceController (e2e)', () => {
+describe('TwitchEventsController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [TwitchListenerServiceModule],
+      imports: [TwitchEventsModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

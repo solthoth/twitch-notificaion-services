@@ -14,13 +14,13 @@
         "tsConfigPath": "apps/discord-notification-publisher/tsconfig.app.json"
       }
     },
-    "twitch-listener-service": {
+    "twitch-events": {
       "type": "application",
-      "root": "apps/twitch-listener-service",
+      "root": "apps/twitch-events",
       "entryFile": "main",
-      "sourceRoot": "apps/twitch-listener-service/src",
+      "sourceRoot": "apps/twitch-events/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/twitch-listener-service/tsconfig.app.json"
+        "tsConfigPath": "apps/twitch-events/tsconfig.app.json"
       }
     }
   }
