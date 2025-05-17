@@ -4,9 +4,10 @@ import axios from 'axios';
 
 @Injectable()
 export class TwitchEventsGateway implements OnModuleInit {
+  
   private readonly logger = new Logger(TwitchEventsGateway.name);
-  private ws: WebSocket;
-  private twitchToken: string;
+  private ws!: WebSocket;
+  private twitchToken: string = '';
   private readonly oauthUrl = process.env.TWITCH_OAUTH_URL || 'https://id.twitch.tv/oauth2/token';
   private readonly websocketUrl = process.env.TWITCH_WEBSOCKET_URL || 'wss://eventsub.wss.twitch.tv/ws';
   private readonly eventsSubscriptionUrl = process.env.TWITCH_EVENTS_SUBSCRIPTION_URL || 'https://api.twitch.tv/helix/eventsub/subscriptions';
