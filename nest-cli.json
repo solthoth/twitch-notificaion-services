@@ -5,11 +5,23 @@
   "monorepo": true,
   "root": ".",
   "projects": {
-    "main": {
+    "discord-notification-publisher": {
       "type": "application",
-      "root": "apps/main",
+      "root": "apps/discord-notification-publisher",
       "entryFile": "main",
-      "sourceRoot": "apps/main/src"
+      "sourceRoot": "apps/discord-notification-publisher/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/discord-notification-publisher/tsconfig.app.json"
+      }
+    },
+    "twitch-listener-service": {
+      "type": "application",
+      "root": "apps/twitch-listener-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/twitch-listener-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/twitch-listener-service/tsconfig.app.json"
+      }
     }
   }
 }
