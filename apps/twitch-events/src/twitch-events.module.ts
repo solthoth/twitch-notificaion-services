@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
-import { TwitchEventsController } from './twitch-events.controller';
-import { TwitchEventsService } from './twitch-events.service';
+import { TwitchEventsGateway } from './twitch-events.gateway';
 
 @Module({
-  imports: [],
-  controllers: [TwitchEventsController],
-  providers: [TwitchEventsService],
+  providers: [TwitchEventsGateway],
 })
 export class TwitchEventsModule {}

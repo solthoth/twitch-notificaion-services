@@ -1,9 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/main/src",
+  "sourceRoot": "apps",
   "monorepo": true,
   "root": ".",
+  "compilerOptions": {
+    "tsConfigPath": "tsconfig.base.json",
+    "webpack": false
+  },
   "projects": {
     "discord-notification-publisher": {
       "type": "application",
