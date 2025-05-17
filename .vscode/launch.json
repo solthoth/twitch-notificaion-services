@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "command": "yarn start:dev twitch-events",
+        "name": "Run twitch events",
+        "request": "launch",
+        "type": "node-terminal",
+        "skipFiles": ["<node_internals>/**"],
+        "localRoot": "${workspaceFolder}/apps/twitch-events",
+    },
+  ]
+}

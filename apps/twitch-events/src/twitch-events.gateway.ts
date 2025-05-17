@@ -1,35 +1,46 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import WebSocket from 'ws';
 import axios from 'axios';
 
 @Injectable()
 export class TwitchEventsGateway implements OnModuleInit {
   
+  constructor(private readonly configService: ConfigService) {}
   private readonly logger = new Logger(TwitchEventsGateway.name);
-  private ws!: WebSocket;
   private twitchToken: string = '';
-  private readonly oauthUrl = process.env.TWITCH_OAUTH_URL || 'https://id.twitch.tv/oauth2/token';
-  private readonly websocketUrl = process.env.TWITCH_WEBSOCKET_URL || 'wss://eventsub.wss.twitch.tv/ws';
-  private readonly eventsSubscriptionUrl = process.env.TWITCH_EVENTS_SUBSCRIPTION_URL || 'https://api.twitch.tv/helix/eventsub/subscriptions';
-  private readonly clientId = process.env.TWITCH_CLIENT_ID;
-  private readonly clientSecret = process.env.TWITCH_CLIENT_SECRET;
-
+  
+  private oauthTokenUrl!: string;
+  private websocketUrl!: string;
+  private eventsSubscriptionUrl!: string;
+  private clientId!: string;
+  private clientSecret!: string;
+  
   async onModuleInit() {
+    this.oauthTokenUrl = this.configService.get<string>('TWITCH_OAUTH_TOKEN_URL') || 'https://id.twitch.tv/oauth2/token';
+    this.websocketUrl = this.configService.get<string>('TWITCH_WEBSOCKET_URL') || 'wss://eventsub.wss.twitch.tv/ws';
+    this.eventsSubscriptionUrl = this.configService.get<string>('TWITCH_EVENTS_SUBSCRIPTION_URL') || 'https://api.twitch.tv/helix/eventsub/subscriptions';
+    this.clientId = this.configService.get<string>('TWITCH_CLIENT_ID')!;
+    this.clientSecret = this.configService.get<string>('TWITCH_CLIENT_SECRET')!;
+
     this.logger.log('Starting Twitch Events Gateway...');
     await this.authenticateWithTwitch();
     this.connectToTwitchWebSocket();
   }
 
   private async authenticateWithTwitch() {
-    const url = this.oauthUrl;
+    const url = this.oauthTokenUrl;
+    const params = new URLSearchParams();
+    params.append('client_id', this.clientId);
+    params.append('client_secret', this.clientSecret);
+    params.append('grant_type', 'client_credentials');
+
     const response = await axios.post(
       url,
-      null,
+      params.toString(),
       {
-        params: {
-          client_id: this.clientId,
-          client_secret: this.clientSecret,
-          grant_type: 'client_credentials',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
       }
     );
@@ -66,7 +77,6 @@ export class TwitchEventsGateway implements OnModuleInit {
       this.logger.warn('WebSocket connection closed');
     });
 
-    this.ws = ws;
   }
 
   private async subscribeToFollowEvent(sessionId: string) {
